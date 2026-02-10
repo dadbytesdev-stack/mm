@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/service-worker.js",
+      "destination": "/_next/static/chunks/service-worker.js"
+    }
+  ]
+}
