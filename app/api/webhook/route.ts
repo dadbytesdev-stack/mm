@@ -1,44 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '../../../lib/stripe'
+import { saveSubscription, deleteSubscription, getSubscription } from '../../../lib/subscriptionStore'
 import Stripe from 'stripe'
 
 // Tell Next.js not to parse the body — Stripe needs the raw bytes to verify the signature
 export const config = { api: { bodyParser: false } }
 
-// ─── Subscription storage ─────────────────────────────────────────────────────
-// This is a simple in-memory store for development / demo purposes.
-// In production, replace with a real database (Supabase, PlanetScale, MongoDB, etc.)
-// The shape: { [userId]: { subscriptionId, status, currentPeriodEnd } }
+// ─── Webhook handler ────────────────────────────────────────────────────────────
 
-export type SubscriptionRecord = {
-  subscriptionId: string
-  customerId: string
-  status: Stripe.Subscription.Status
-  currentPeriodEnd: number // unix timestamp
-  cancelAtPeriodEnd: boolean
-}
 
-// In a real app this would be a DB call. For now it writes to a module-level map
-// which persists across requests in a single serverless instance (good enough for dev).
-// Swap the two functions below for DB reads/writes when ready.
-const subscriptionStore = new Map<string, SubscriptionRecord>()
-
-export async function saveSubscription(userId: string, record: SubscriptionRecord) {
-  subscriptionStore.set(userId, record)
-  // TODO: await db.subscriptions.upsert({ where: { userId }, data: record })
-}
-
-export async function deleteSubscription(userId: string) {
-  subscriptionStore.delete(userId)
-  // TODO: await db.subscriptions.delete({ where: { userId } })
-}
-
-export function getSubscription(userId: string): SubscriptionRecord | undefined {
-  return subscriptionStore.get(userId)
-  // TODO: return await db.subscriptions.findUnique({ where: { userId } })
-}
-
-// ─── Webhook handler ──────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
   const body = await req.text()

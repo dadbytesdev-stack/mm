@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSubscription } from '../webhook/route'
+import { getSubscription } from '../../../lib/subscriptionStore'
 
 export async function GET(req: NextRequest) {
   try {

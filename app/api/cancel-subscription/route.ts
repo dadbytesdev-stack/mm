@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '../../../lib/stripe'
-import { getSubscription, saveSubscription } from '../webhook/route'
+import { getSubscription, saveSubscription } from '../../../lib/subscriptionStore'
 
 export async function POST(req: NextRequest) {
   try {
