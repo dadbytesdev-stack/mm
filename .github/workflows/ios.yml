@@ -42,7 +42,7 @@ jobs:
             -archivePath $PWD/MindMantra.xcarchive \
             archive \
             CODE_SIGN_STYLE=Manual \
-            PROVISIONING_PROFILE_SPECIFIER="MindMantra App Store" \
+            PROVISIONING_PROFILE_SPECIFIER="7206c81d-45b6-4c77-b150-a70efe11fe02" \
             DEVELOPMENT_TEAM=Z7Q5NZT4ZL
 
       - name: Export IPA
