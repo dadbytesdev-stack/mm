@@ -35,7 +35,7 @@ jobs:
 
       - name: Build and Archive
         run: |
-          xcodebuild -project MindMantra/MindMantra.xcodeproj \
+          xcodebuild -project MindMantra.xcodeproj \
             -scheme MindMantra \
             -sdk iphoneos \
             -configuration Release \
