@@ -53,13 +53,18 @@ jobs:
           <plist version="1.0">
           <dict>
             <key>method</key>
-            <string>app-store</string>
+            <string>app-store-connect</string>
             <key>teamID</key>
             <string>Z7Q5NZT4ZL</string>
             <key>uploadBitcode</key>
             <false/>
             <key>uploadSymbols</key>
             <true/>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>com.dadbytesdev.mm</key>
+              <string>7206c81d-45b6-4c77-b150-a70efe11fe02</string>
+            </dict>
           </dict>
           </plist>
           EOF
