@@ -79,7 +79,8 @@ jobs:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
         run: |
-          echo $APP_STORE_CONNECT_API_KEY | base64 --decode > AuthKey.p8
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo $APP_STORE_CONNECT_API_KEY | base64 --decode > ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_KEY_ID.p8
           xcrun altool --upload-app \
             --type ios \
             --file $PWD/output/MindMantra.ipa \
