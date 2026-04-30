@@ -200,6 +200,7 @@ export default function MantraMind() {
   const [currentPeriodEnd, setCurrentPeriodEnd] = useState<number | null>(null)
   const [userId, setUserId] = useState<string | null>(null)
   const [stripeLoading, setStripeLoading] = useState(false)
+  const [isNativeApp, setIsNativeApp] = useState(false)
   const [notifPermission, setNotifPermission] = useState<NotificationPermission>('default')
   const [scheduledNotifs, setScheduledNotifs] = useState<ScheduledNotification[]>(DEFAULT_NOTIFICATION_TIMES)
 
@@ -242,6 +243,7 @@ export default function MantraMind() {
 
     const uid = getOrCreateUserId()
     setUserId(uid)
+    setIsNativeApp(/MindMantra|iPhone.*AppleWebKit(?!.*Safari)/i.test(navigator.userAgent))  
 
     // Check localStorage first for instant UI (also catches return from Stripe)
     const savedPremium = localStorage.getItem('isPremium')
@@ -804,14 +806,14 @@ export default function MantraMind() {
           <button onClick={() => setView('history')} className={`p-2 ${hoverBg} rounded-lg transition-colors`}>
             <History className="w-5 h-5" />
           </button>
-          <button onClick={() => isPremium ? setView('notifications') : setView('upgrade')}
+          <button onClick={() => isPremium ? setView('notifications') : isNativeApp ? undefined : setView('upgrade')}
             className={`p-2 ${hoverBg} rounded-lg transition-colors relative`}>
             {isPremium ? (
               <Bell className="w-5 h-5" />
             ) : (
               <span className="relative inline-block">
                 <Bell className="w-5 h-5" />
-                <Lock className="w-3 h-3 text-amber-500 absolute -bottom-0.5 -right-0.5" />
+                {!isNativeApp && <Lock className="w-3 h-3 text-amber-500 absolute -bottom-0.5 -right-0.5" />}
               </span>
             )}
           </button>
@@ -844,7 +846,7 @@ export default function MantraMind() {
         </div>
       </main>
 
-      {!isPremium && (
+      {!isPremium && !isNativeApp && (
         <div className="px-4 pb-4 flex justify-center">
           <button onClick={() => setView('upgrade')}
             className={`flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl border ${cardBorder} ${cardBg} ${hoverBg} transition-colors text-sm`}>
