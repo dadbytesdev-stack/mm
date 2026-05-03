@@ -243,7 +243,7 @@ export default function MantraMind() {
 
     const uid = getOrCreateUserId()
     setUserId(uid)
-    setIsNativeApp(/MindMantra|iPhone.*AppleWebKit(?!.*Safari)/i.test(navigator.userAgent))  
+    setIsNativeApp(!!(window as any).isNativeApp)  
 
     // Check localStorage first for instant UI (also catches return from Stripe)
     const savedPremium = localStorage.getItem('isPremium')
