@@ -514,13 +514,13 @@ export default function MantraMind() {
               ) : (
                 <div className="space-y-3">
                   <p className={`text-sm ${mutedText}`}>Current Plan: <strong className={isDark ? 'text-white' : 'text-gray-900'}>Free</strong></p>
-                  <button onClick={() => setView('upgrade')}
-                    className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2">
-                    <Crown className="w-4 h-4" />
-                    Upgrade to Pro
-                  </button>
-                </div>
-              )}
+                  {!isNativeApp && (
+                    <button onClick={() => setView('upgrade')}
+                      className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2">
+                      <Crown className="w-4 h-4" />
+                      Upgrade to Pro
+                    </button>
+                  )}
             </div>
           </div>
 
@@ -600,6 +600,10 @@ export default function MantraMind() {
   }
 
   if (view === 'upgrade') {
+      if (isNativeApp) {
+        setView('home')
+        return null
+      }
     return (
       <div className={`min-h-screen ${bg} transition-colors duration-300 p-4`}>
         <div className="max-w-md mx-auto">
@@ -807,6 +811,7 @@ export default function MantraMind() {
             <History className="w-5 h-5" />
           </button>
           <button onClick={() => isPremium ? setView('notifications') : isNativeApp ? undefined : setView('upgrade')}
+            disabled={!isPremium && isNativeApp}
             className={`p-2 ${hoverBg} rounded-lg transition-colors relative`}>
             {isPremium ? (
               <Bell className="w-5 h-5" />
