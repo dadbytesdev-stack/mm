@@ -512,7 +512,7 @@ export default function MantraMind() {
                   </div>
                 </div>
               ) : (
-                <div className="space-y-3">
+              <div className="space-y-3">
                   <p className={`text-sm ${mutedText}`}>Current Plan: <strong className={isDark ? 'text-white' : 'text-gray-900'}>Free</strong></p>
                   {!isNativeApp && (
                     <button onClick={() => setView('upgrade')}
@@ -521,6 +521,8 @@ export default function MantraMind() {
                       Upgrade to Pro
                     </button>
                   )}
+                </div>
+              )}
             </div>
           </div>
 
